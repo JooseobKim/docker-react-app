@@ -7,7 +7,7 @@ services:
 
 before_install:
   - echo "start creating an image with dockerfile"
-  - docker build -t outfox99/docker-react -f Dockerfile.dev .
+  - docker build -t outfox99/docker-react -f Dockerfile .
 
 script:
   - docker run -e CI=true outfox99/docker-react npm run test -- --coverage
@@ -21,6 +21,6 @@ deploy:
   bucket-path: "docker-react-app"
   on:
     branch: master
-    
+
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_ACCESS_KEY
