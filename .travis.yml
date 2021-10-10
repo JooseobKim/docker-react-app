@@ -7,18 +7,19 @@ services:
 
 before_install:
   - echo "start creating an image with dockerfile"
-  - docker build -t outfox99/docker-react -f Dockerfile .
+  - docker build -t outfox99/docker-react -f Dockerfile.dev .
+
+script: 
+  - docker run -e CI=true react-nginx npm run test -- --coverage
 
 deploy:
   provider: elasticbeanstalk
   region: "ap-northeast-2"
   app: "docker-react-app"
-  env: "Dockerreactapp-env"
+  env: "Dockerreactapp-env-1"
   bucket-name: "elasticbeanstalk-ap-northeast-2-775308624749"
   bucket-path: "docker-react-app"
   on:
     branch: master
-  access_key_id: 
-    secure: $AWS_ACCESS_KEY
-  secret_access_key: 
-    secure: $AWS_SECRET_ACCESS_KEY
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
